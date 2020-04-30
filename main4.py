@@ -29,11 +29,15 @@ class MainView(arcade.View):
         for row in range(ROW_COUNT):
             for column in range(COLUMN_COUNT):
                 # Append a cell
-                tile_sprite = arcade.Sprite('images/tile.png')
-                tile_sprite.center_x = (WIDTH + MARGIN) * column + MARGIN + WIDTH // 2
-                tile_sprite.center_y = (HEIGHT + MARGIN) * row + MARGIN + HEIGHT // 2
-                tile_sprite.color = arcade.color.WHITE
-                self.grid.append(tile_sprite)
+                self.grid.append(self.create_cell(row, column))
+
+    def create_cell(self, row, column):
+        # Create a cell
+        cell_sprite = arcade.Sprite('images/tile.png')
+        cell_sprite.center_x = (WIDTH + MARGIN) * column + MARGIN + WIDTH // 2
+        cell_sprite.center_y = (HEIGHT + MARGIN) * row + MARGIN + HEIGHT // 2
+        cell_sprite.color = arcade.color.WHITE
+        return cell_sprite
 
     def on_show(self):
         """
