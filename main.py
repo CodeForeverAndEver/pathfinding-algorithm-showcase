@@ -61,8 +61,7 @@ class GridView(arcade.View):
         self.grid.draw()
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
-        if button == 1:
-            self.changed_on_this_drag = []
+        self.changed_on_this_drag = []
 
     def on_mouse_drag(self, x: float, y: float, dx: float, dy: float, _buttons: int, _modifiers: int):
         """
@@ -79,11 +78,14 @@ class GridView(arcade.View):
         # Make sure in grid (can click upper right corner in margin and go to non-existant grid location
         # Also make sure that the box hasn't already been changed during this drag
         if row < ROW_COUNT and column < COLUMN_COUNT and clicked_cell not in self.changed_on_this_drag:
-            # Flip the color between gray and white
-            if clicked_cell.color == arcade.color.WHITE:
-                clicked_cell.color = (50, 50, 50)
-            else:
+            if _buttons == 1:
+                # Flip the color between gray and white
+                if clicked_cell.color == arcade.color.WHITE:
+                    clicked_cell.color = (50, 50, 50)
+            elif _buttons == 4:
+                print('Rclick')
                 clicked_cell.color = arcade.color.WHITE
+                print(clicked_cell.color)
 
         self.changed_on_this_drag.append(clicked_cell)
 
