@@ -13,7 +13,7 @@ SCREEN_HEIGHT = ROW_COUNT * (HEIGHT + MARGIN) + MARGIN
 SCREEN_TITLE = "Path Finding Algorithms"
 
 
-class MainView(arcade.View):
+class GridView(arcade.View):
     """
     Main Window To Display The Algorithms
     """
@@ -90,7 +90,7 @@ class MainView(arcade.View):
 
 def main():
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    view = MainView()
+    view = GridView()
     window.show_view(view)
     arcade.run()
 
