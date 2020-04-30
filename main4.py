@@ -24,6 +24,11 @@ class MainView(arcade.View):
         """
         super().__init__()
 
+        # Variable that stores all boxes that were clicked within a the current "period of drag"
+        # makes sure that boxes don't blink white and green super fast bu checking to make sure
+        # that they haven't already been changed during the current drag
+        self.changed_on_this_drag = []
+
         # Create 1D array
         self.grid = arcade.SpriteList()
         for row in range(ROW_COUNT):
@@ -56,6 +61,10 @@ class MainView(arcade.View):
         self.grid.draw()
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
+        if button == 1:
+            self.changed_on_this_drag = []
+
+    def on_mouse_drag(self, x: float, y: float, dx: float, dy: float, _buttons: int, _modifiers: int):
         """
         Called when user presses a mouse button
         """
@@ -64,15 +73,19 @@ class MainView(arcade.View):
         column = int(x // (WIDTH + MARGIN))
         row = int(y // (HEIGHT + MARGIN))
 
-        print(f"Click coordinates: ({x}, {y}). Grid coordinates: ({row}, {column})")
+        # Get the cell that was clicked
+        clicked_cell = self.grid[row * COLUMN_COUNT + column]
 
         # Make sure in grid (can click upper right corner in margin and go to non-existant grid location
-        if row < ROW_COUNT and column < COLUMN_COUNT:
+        # Also make sure that the box hasn't already been changed during this drag
+        if row < ROW_COUNT and column < COLUMN_COUNT and clicked_cell not in self.changed_on_this_drag:
             # Flip the color between green and white
-            if self.grid[row * COLUMN_COUNT + column].color == arcade.color.WHITE:
-                self.grid[row * COLUMN_COUNT + column].color = arcade.color.GREEN
+            if clicked_cell.color == arcade.color.WHITE:
+                clicked_cell.color = arcade.color.GREEN
             else:
-                self.grid[row * COLUMN_COUNT + column].color = arcade.color.WHITE
+                clicked_cell.color = arcade.color.WHITE
+
+        self.changed_on_this_drag.append(clicked_cell)
 
 
 def main():
