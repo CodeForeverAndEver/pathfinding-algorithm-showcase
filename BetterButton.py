@@ -41,8 +41,10 @@ class BetterButton(arcade.TextButton):
 
     def check_mouse_release(self, x, y):
         if x > self.center_x + self.width / 2:
+            self.face_color = (0, 0, 0, 0)
             return
         if x < self.center_x - self.width / 2:
+            self.face_color = (0, 0, 0, 0)
             return
         if y > self.center_y + self.height / 2:
             self.face_color = (0, 0, 0, 0)
@@ -51,6 +53,7 @@ class BetterButton(arcade.TextButton):
             self.face_color = (0, 0, 0, 0)
             return
         self.mouse_pressed = False
+        self.face_color = (0, 0, 0, 0)
         self.on_release()
 
     def on_release(self):
